@@ -1,9 +1,9 @@
 package com.pranav.springBootH2.service;
 
-import com.pranav.springBootH2.dto.WorkersDetailsResponseDto;
-import com.pranav.springBootH2.model.WorkerAddress;
-import com.pranav.springBootH2.repository.WorkerAddressRepository;
-import com.pranav.springBootH2.repository.WorkerRepository;
+import com.pranav.springBootH2.dto.EmployeeResponseDto;
+import com.pranav.springBootH2.model.Address;
+import com.pranav.springBootH2.repository.AddressRepository;
+import com.pranav.springBootH2.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,49 +11,48 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class WorkerAddressService {
+public class AddressService {
     @Autowired
-    private WorkerAddressRepository repository;
+    private AddressRepository repository;
 
     @Autowired
-    private WorkerRepository workers;
+    private EmployeeRepository workers;
 
-    public WorkerAddress add(WorkerAddress workerAddress) {
-        workers.findById(workerAddress.getWorkers().getId()).orElseThrow(() -> new IllegalArgumentException("NO WORKER FOUND IN THIS ID"));
-//        workerAddress.setWorkers(v);
-        return repository.save(workerAddress);
+    public Address add(Address address) {
+        workers.findById(address.getEmployee().getId()).orElseThrow(() -> new IllegalArgumentException("NO WORKER FOUND IN THIS ID"));
+        return repository.save(address);
     }
 
-    public List<WorkersDetailsResponseDto> list() {
+    public List<EmployeeResponseDto> list() {
         return repository.findAll()
                 .stream()
                 .map(this::convert)
                 .collect(Collectors.toList());
     }
 
-    private WorkersDetailsResponseDto convert(WorkerAddress workerAddress) {
-        WorkersDetailsResponseDto dto = new WorkersDetailsResponseDto();
-        dto.setId(workerAddress.getWorkers().getId());
-        dto.setFirstName(workerAddress.getWorkers().getFirstName());
-        dto.setLastName(workerAddress.getWorkers().getLastName());
-        dto.setEmail(workerAddress.getWorkers().getEmail());
-        dto.setDepartment(workerAddress.getWorkers().getDepartment().getDepartment());
-        dto.setCity(workerAddress.getCity());
-        dto.setState(workerAddress.getState());
+    private EmployeeResponseDto convert(Address address) {
+        EmployeeResponseDto dto = new EmployeeResponseDto();
+        dto.setId(address.getEmployee().getId());
+        dto.setFirstName(address.getEmployee().getFirstName());
+        dto.setLastName(address.getEmployee().getLastName());
+        dto.setEmail(address.getEmployee().getEmail());
+        dto.setDepartment(address.getEmployee().getDepartment().getDepartment());
+        dto.setCity(address.getCity());
+        dto.setState(address.getState());
         return dto;
     }
 
-    public WorkersDetailsResponseDto getById(int id) {
-        WorkerAddress workerAddress = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Details not found"));
-        return convert(workerAddress);
+    public EmployeeResponseDto getById(int id) {
+        Address address = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Details not found"));
+        return convert(address);
     }
 
-    public WorkerAddress findById(int id) {
+    public Address findById(int id) {
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("No details found"));
     }
 
-    public WorkerAddress update(int id, WorkerAddress address) {
-        WorkerAddress address1 = findById(id);
+    public Address update(int id, Address address) {
+        Address address1 = findById(id);
         address1.setStreet(address.getStreet());
         address1.setCity(address.getCity());
         address1.setState(address.getState());
@@ -62,6 +61,7 @@ public class WorkerAddressService {
 
     public void delete(int id) {
         getById(id);
+
         repository.deleteById(id);
     }
 }

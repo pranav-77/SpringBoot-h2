@@ -1,36 +1,33 @@
 package com.pranav.springBootH2.service;
 
-import com.pranav.springBootH2.dto.WorkersDetailsRequestDto;
-import com.pranav.springBootH2.dto.WorkersDto;
-import com.pranav.springBootH2.model.WorkerAddress;
-import com.pranav.springBootH2.model.Workers;
-import com.pranav.springBootH2.model.WorkersDepartment;
-import com.pranav.springBootH2.repository.WorkerAddressRepository;
-import com.pranav.springBootH2.repository.WorkerRepository;
-import com.pranav.springBootH2.repository.WorkersDepartmentRepository;
+import com.pranav.springBootH2.model.Address;
+import com.pranav.springBootH2.model.Employee;
+import com.pranav.springBootH2.model.Department;
+import com.pranav.springBootH2.repository.AddressRepository;
+import com.pranav.springBootH2.repository.EmployeeRepository;
+import com.pranav.springBootH2.repository.DepartmentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class WorkerService {
+public class EmployeeService {
     @Autowired
-    private WorkerRepository workerRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    private WorkersDepartmentRepository repo;
+    private DepartmentRepository repo;
 
     @Autowired
-    private WorkerAddressRepository addressRepository;
+    private AddressRepository addressRepository;
 
-    public Workers add(Workers workers) {
+    public Employee add(Employee employee) {
         log.info("Added Worker");
-        repo.findById(workers.getDepartment().getId()).orElseThrow(() -> new RuntimeException("department not present by the id"));
+        repo.findById(employee.getDepartment().getId()).orElseThrow(() -> new RuntimeException("department not present by the id"));
 //        Workers workers1 = new Workers();
 //        workers1.setFirstName(workers.getFirstName());
 //        workers1.setLastName(workers.getLastName());
@@ -54,64 +51,46 @@ public class WorkerService {
 //        workers1.setAddress(addresses);
 //        addressRepository.saveAll(addresses);
 //        return workerRepository.save(workers1);
-        List<WorkerAddress> addresses = workers.getAddress();
-        Workers workers1= workerRepository.save(workers);
+        List<Address> addresses = employee.getAddress();
+        Employee employee1 = employeeRepository.save(employee);
         for (int i=0 ; i<addresses.size() ; i++)
         {
-            addresses.get(i).setWorkers(workers1);
+            addresses.get(i).setEmployee(employee1);
         }
         addressRepository.saveAll(addresses);
-        return workers1;
+        return employee1;
     }
 
-    public List<WorkersDto> workersList() {
+    public List<Employee> workersList() {
         log.info("Fetching details");
-        return workerRepository.findAll()
-                .stream()
-                .map(this::convert)
-                .collect(Collectors.toList());
+        return employeeRepository.findAll();
     }
 
-    private WorkersDto convert(Workers workers) {
-        WorkersDto workersDto = new WorkersDto();
-        workersDto.setId(workers.getId());
-        workersDto.setFirstName(workers.getFirstName());
-        workersDto.setLastName(workers.getLastName());
-        workersDto.setEmail(workers.getEmail());
-        workersDto.setDepartment(workers.getDepartment().getDepartment());
-        return workersDto;
-    }
-
-    public WorkersDto getById(int id) {
+    public Employee getById(int id) {
         log.info("Searching by id");
-        Workers workers = workerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No data found"));
-        return convert(workers);
+        return employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No data found"));
     }
 
-    public Workers findById(int id) {
-        return workerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No Details Found"));
-    }
-
-    public Workers updateById(int id, Workers workers) {
-        Workers workers1 = findById(id);
-        workers1.setFirstName(workers.getFirstName());
-        workers1.setLastName(workers.getLastName());
-        workers1.setEmail(workers.getEmail());
-        workers1.setPhoneNo(workers.getPhoneNo());
-        workers1.setSalary(workers.getSalary());
-        workers1.setGender(workers.getGender());
-        workers1.setDepartment(workers.getDepartment());
+    public Employee updateById(int id, Employee employee) {
+        Employee employee1 = getById(id);
+        employee1.setFirstName(employee.getFirstName());
+        employee1.setLastName(employee.getLastName());
+        employee1.setEmail(employee.getEmail());
+        employee1.setPhoneNo(employee.getPhoneNo());
+        employee1.setSalary(employee.getSalary());
+        employee1.setGender(employee.getGender());
+        employee1.setDepartment(employee.getDepartment());
         log.info("updating data");
-        return workerRepository.save(workers1);
+        return employeeRepository.save(employee1);
     }
 
     public void deleteById(int id) {
         log.info("Deleting data");
-        workerRepository.deleteById(id);
+        employeeRepository.deleteById(id);
     }
 
-    public List<Workers> getList(int id) {
-        WorkersDepartment w = repo.findById(id).get();
-        return workerRepository.findByDepartment(w);
+    public List<Employee> getList(int id) {
+        Department w = repo.findById(id).get();
+        return employeeRepository.findByDepartment(w);
     }
 }

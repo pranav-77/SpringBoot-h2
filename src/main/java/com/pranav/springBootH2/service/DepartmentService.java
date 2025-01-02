@@ -1,31 +1,31 @@
 package com.pranav.springBootH2.service;
 
-import com.pranav.springBootH2.model.WorkersDepartment;
-import com.pranav.springBootH2.repository.WorkersDepartmentRepository;
+import com.pranav.springBootH2.model.Department;
+import com.pranav.springBootH2.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WorkerDepartmentService {
+public class DepartmentService {
     @Autowired
-    private WorkersDepartmentRepository repository;
+    private DepartmentRepository repository;
 
-    public WorkersDepartment add(WorkersDepartment department) {
+    public Department add(Department department) {
         return repository.save(department);
     }
 
-    public List<WorkersDepartment> list() {
+    public List<Department> list() {
         return repository.findAll();
     }
 
-    public WorkersDepartment getById(int id) {
+    public Department getById(int id) {
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("NO DETAILS FOUND"));
     }
 
-    public WorkersDepartment update(int id, WorkersDepartment department) {
-        WorkersDepartment department1 = getById(id);
+    public Department update(int id, Department department) {
+        Department department1 = getById(id);
         department1.setId(department.getId());
         department1.setDepartment(department.getDepartment());
         return repository.save(department1);
