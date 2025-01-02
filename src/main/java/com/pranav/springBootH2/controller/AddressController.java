@@ -1,8 +1,8 @@
 package com.pranav.springBootH2.controller;
 
-import com.pranav.springBootH2.dto.WorkersDetailsResponseDto;
-import com.pranav.springBootH2.model.WorkerAddress;
-import com.pranav.springBootH2.service.WorkerAddressService;
+import com.pranav.springBootH2.dto.EmployeeResponseDto;
+import com.pranav.springBootH2.model.Address;
+import com.pranav.springBootH2.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,27 +10,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/address")
-public class WorkerAddressController {
+public class AddressController {
     @Autowired
-    private WorkerAddressService addressService;
+    private AddressService addressService;
 
     @PostMapping("/add")
-    public WorkerAddress add(@RequestBody WorkerAddress workerAddress) {
-        return addressService.add(workerAddress);
+    public Address add(@RequestBody Address address) {
+        return addressService.add(address);
     }
 
     @GetMapping("/list")
-    public List<WorkersDetailsResponseDto> list() {
+    public List<EmployeeResponseDto> list() {
         return addressService.list();
     }
 
     @GetMapping("/search/{id}")
-    public WorkersDetailsResponseDto getById(@PathVariable int id) {
+    public EmployeeResponseDto getById(@PathVariable int id) {
         return addressService.getById(id);
     }
 
     @PutMapping("/update/{id}")
-    public WorkerAddress update(@PathVariable int id, @RequestBody WorkerAddress address) {
+    public Address update(@PathVariable int id, @RequestBody Address address) {
         return addressService.update(id, address);
     }
 

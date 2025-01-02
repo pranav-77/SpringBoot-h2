@@ -1,6 +1,5 @@
 package com.pranav.springBootH2.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class WorkerAddress {
+public class Address {
     @Id
     @GeneratedValue
     private int addressId;
@@ -19,5 +18,5 @@ public class WorkerAddress {
     private String state;
 
     @ManyToOne
-    private Workers workers;
+    private Employee employee;
 }

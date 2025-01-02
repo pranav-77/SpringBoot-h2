@@ -1,6 +1,5 @@
 package com.pranav.springBootH2.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Workers {
+public class Employee {
     @Id
     @GeneratedValue
     private int id;
@@ -28,8 +27,8 @@ public class Workers {
     private String gender;
 
     @ManyToOne
-    private WorkersDepartment department;
+    private Department department;
 
-    @OneToMany(mappedBy = "workers")
-    private List<WorkerAddress> address;
+    @OneToMany(mappedBy = "employee")
+    private List<Address> address;
 }

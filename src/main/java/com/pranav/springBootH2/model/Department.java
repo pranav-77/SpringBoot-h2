@@ -11,12 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class WorkersDepartment {
+public class Department {
     @Id
     @GeneratedValue
     private int id;
     private String department;
 
     @OneToMany(mappedBy = "department")
-    private List<Workers> workers;
+    private List<Employee> employee;
 }

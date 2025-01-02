@@ -1,7 +1,7 @@
 package com.pranav.springBootH2.controller;
 
-import com.pranav.springBootH2.model.WorkersDepartment;
-import com.pranav.springBootH2.service.WorkerDepartmentService;
+import com.pranav.springBootH2.model.Department;
+import com.pranav.springBootH2.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,27 +9,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/department")
-public class WorkerDepartmentController {
+public class DepartmentController {
     @Autowired
-    private WorkerDepartmentService service;
+    private DepartmentService service;
 
     @PostMapping("/add")
-    public WorkersDepartment add(@RequestBody WorkersDepartment department) {
+    public Department add(@RequestBody Department department) {
         return service.add(department);
     }
 
     @GetMapping("/list")
-    public List<WorkersDepartment> list() {
+    public List<Department> list() {
         return service.list();
     }
 
     @GetMapping("/search/{id}")
-    public WorkersDepartment getById(@PathVariable int id) {
+    public Department getById(@PathVariable int id) {
         return service.getById(id);
     }
 
     @PutMapping("/update/{id}")
-    public WorkersDepartment update(@PathVariable int id, @RequestBody WorkersDepartment department) {
+    public Department update(@PathVariable int id, @RequestBody Department department) {
         return service.update(id, department);
     }
 

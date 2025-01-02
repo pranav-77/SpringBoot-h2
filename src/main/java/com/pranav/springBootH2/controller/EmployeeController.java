@@ -1,9 +1,7 @@
 package com.pranav.springBootH2.controller;
 
-import com.pranav.springBootH2.dto.WorkersDetailsRequestDto;
-import com.pranav.springBootH2.dto.WorkersDto;
-import com.pranav.springBootH2.model.Workers;
-import com.pranav.springBootH2.service.WorkerService;
+import com.pranav.springBootH2.model.Employee;
+import com.pranav.springBootH2.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,37 +9,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/workers")
-public class WorkerController {
+public class EmployeeController {
     @Autowired
-    private WorkerService workerService;
+    private EmployeeService employeeService;
 
     @PostMapping("/add")
-    public Workers add(@RequestBody Workers workers) {
-        return workerService.add(workers);
+    public Employee add(@RequestBody Employee employee) {
+        return employeeService.add(employee);
     }
 
     @GetMapping("/list")
-    public List<WorkersDto> workersList() {
-        return workerService.workersList();
+    public List<Employee> workersList() {
+        return employeeService.workersList();
     }
 
     @GetMapping("/search/{id}")
-    public WorkersDto getById(@PathVariable int id) {
-        return workerService.getById(id);
+    public Employee getById(@PathVariable int id) {
+        return employeeService.getById(id);
     }
 
     @PutMapping("/update/{id}")
-    public Workers updateById(@PathVariable int id, @RequestBody Workers workers) {
-        return workerService.updateById(id, workers);
+    public Employee updateById(@PathVariable int id, @RequestBody Employee employee) {
+        return employeeService.updateById(id, employee);
     }
 
     @GetMapping("/getByDeptId/{id}")
-    public List<Workers> getList(@PathVariable int id) {
-        return workerService.getList(id);
+    public List<Employee> getList(@PathVariable int id) {
+        return employeeService.getList(id);
     }
 
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable int id) {
-        workerService.deleteById(id);
+        employeeService.deleteById(id);
     }
 }
