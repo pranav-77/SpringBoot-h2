@@ -1,5 +1,6 @@
 package com.pranav.springBootH2.controller;
 
+import com.pranav.springBootH2.dto.WorkersDetailsResponseDto;
 import com.pranav.springBootH2.model.WorkerAddress;
 import com.pranav.springBootH2.service.WorkerAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,12 @@ public class WorkerAddressController {
     }
 
     @GetMapping("/list")
-    public List<WorkerAddress> list() {
+    public List<WorkersDetailsResponseDto> list() {
         return addressService.list();
     }
 
     @GetMapping("/search/{id}")
-    public WorkerAddress getById(@PathVariable int id) {
+    public WorkersDetailsResponseDto getById(@PathVariable int id) {
         return addressService.getById(id);
     }
 

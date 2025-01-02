@@ -1,49 +1,47 @@
 package com.pranav.springBootH2.controller;
 
+import com.pranav.springBootH2.dto.WorkersDetailsRequestDto;
+import com.pranav.springBootH2.dto.WorkersDto;
+import com.pranav.springBootH2.model.Workers;
+import com.pranav.springBootH2.service.WorkerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.pranav.springBootH2.model.Employee;
-import com.pranav.springBootH2.service.EmployeeService;
-
 @RestController
-@RequestMapping("/employee")
-public class EmployeeController {
-
+@RequestMapping("/workers")
+public class WorkerController {
     @Autowired
-    private EmployeeService employeeService;
+    private WorkerService workerService;
 
     @PostMapping("/add")
-    public Employee add(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public Workers add(@RequestBody Workers workers) {
+        return workerService.add(workers);
     }
 
     @GetMapping("/list")
-    public List<Employee> list() {
-        return employeeService.getAllEmployee();
+    public List<WorkersDto> workersList() {
+        return workerService.workersList();
     }
 
-    @GetMapping("/get/{id}")
-    public Employee getById(@PathVariable int id) {
-        return employeeService.getById(id);
+    @GetMapping("/search/{id}")
+    public WorkersDto getById(@PathVariable int id) {
+        return workerService.getById(id);
     }
 
     @PutMapping("/update/{id}")
-    public Employee update(@PathVariable int id, @RequestBody Employee employee) {
-        return employeeService.update(id, employee);
+    public Workers updateById(@PathVariable int id, @RequestBody Workers workers) {
+        return workerService.updateById(id, workers);
+    }
+
+    @GetMapping("/getByDeptId/{id}")
+    public List<Workers> getList(@PathVariable int id) {
+        return workerService.getList(id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable int id) {
-        employeeService.delete(id);
+    public void deleteById(@PathVariable int id) {
+        workerService.deleteById(id);
     }
 }

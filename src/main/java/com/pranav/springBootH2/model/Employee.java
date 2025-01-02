@@ -1,16 +1,35 @@
 package com.pranav.springBootH2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Employee {
-	@Id
-	@GeneratedValue
-	private int id;
-	private String name;
-	private double salary;
+public class Workers {
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+
+    @Column(unique = true)
+    private Long phoneNo;
+
+    private double salary;
+    private String gender;
+
+    @ManyToOne
+    private WorkersDepartment department;
+
+    @OneToMany(mappedBy = "workers")
+    private List<WorkerAddress> address;
 }
